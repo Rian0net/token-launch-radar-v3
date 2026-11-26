@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Launch Radar — pre-token protocols, ranked by implied value</title>
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand">
+    <div class="mark">LR</div>
+    <div>
+      <h1>Launch Radar</h1>
+      <p class="sub">Pre-token protocols ranked by implied value — calibrated on the snapshot's own launched protocols, never on a hardcoded list.</p>
+    </div>
+  </div>
+  <div class="stats" id="stats"></div>
+</header>
+
+<section class="controls">
+  <div class="tabs" id="segmentTabs">
+    <button data-seg="all" class="on">All pre-token</button>
+    <button data-seg="watchlist">Watchlist</button>
+    <button data-seg="early">Early finds</button>
+    <button data-seg="live">Already launched</button>
+  </div>
+  <input id="search" type="search" placeholder="Search name, slug or chain…">
+  <select id="categoryFilter"><option value="">All categories</option></select>
+  <select id="chainFilter"><option value="">All chains</option></select>
+  <select id="sortSel">
+    <option value="rank">Sort: implied value</option>
+    <option value="tvl">Sort: TVL</option>
+    <option value="growth">Sort: 7d growth</option>
+    <option value="age">Sort: age (oldest first)</option>
+    <option value="name">Sort: name A–Z</option>
+  </select>
+</section>
+
+<main class="layout">
+  <section class="boardWrap">
+    <table id="board">
+      <thead><tr>
+        <th data-k="rank">#</th><th data-k="name">Protocol</th><th>Category</th>
+        <th data-k="tvl" class="num">TVL</th><th data-k="growth" class="num">7d</th>
+        <th data-k="age" class="num">Age</th><th data-k="rank" class="num">Implied value</th><th class="num">Band</th>
+      </tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+    <table id="liveBoard" hidden>
+      <thead><tr><th>#</th><th>Protocol</th><th>Category</th><th class="num">TVL</th><th class="num">Market cap</th><th class="num">Mcap / TVL</th></tr></thead>
+      <tbody id="liveRows"></tbody>
+    </table>
+    <p class="count" id="rowCount"></p>
+  </section>
+  <aside class="detail" id="detail"></aside>
+</main>
+
+<section class="method">
+  <h2>How the value is derived</h2>
+  <p>Implied value = TVL × category multiple × growth × maturity × breadth. The category multiple is the
+  median market-cap/TVL of the protocols in that category whose token already trades in this snapshot,
+  shrunk toward the global median (<span id="globalMedian"></span>) with weight n/(n+10) and clamped to
+  [0.04, 1.60]. Growth = 1 + 0.55·tanh(7d change / 30). Maturity = 0.72 + 0.55·(1 − e<sup>−age/520d</sup>).
+  Breadth = 1 + 0.06·log<sub>2</sub>(chains), capped at 1.18. The band widens when a category has few
+  launched peers to calibrate on. Protocols that record a token are never ranked — they are the
+  calibration set, listed under “Already launched”.</p>
+  <table id="calTable">
+    <thead><tr><th>Category</th><th class="num">Launched peers</th><th class="num">Median mcap/TVL</th><th class="num">Multiple used</th></tr></thead>
+    <tbody id="calRows"></tbody>
+  </table>
+</section>
+
+<footer>Snapshot as of <span id="asOf"></span> · Model launch-radar-3 · Implied value is this board's own claim about what a launch could be worth if the record held — not a prediction that a token will be issued.</footer>
+<script src="../data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
