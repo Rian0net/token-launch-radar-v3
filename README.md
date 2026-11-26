@@ -1,5 +1,9 @@
 # Launch Radar — token launch radar (model v3)
 
+[![make.fun · token-radar-01](https://make.fun/badge/token-radar-01.svg)](https://make.fun/bounty/token-radar-01?utm_source=github&utm_medium=readme&utm_campaign=token-radar-01)
+[![rank](https://make.fun/badge/token-radar-01/Rian0net/token-launch-radar-v3/rank.svg)](https://make.fun/bounty/token-radar-01/leaderboard?utm_source=github&utm_medium=readme&utm_campaign=token-radar-01)
+[![reward](https://make.fun/badge/token-radar-01/Rian0net/token-launch-radar-v3/reward.svg)](https://make.fun/bounty/token-radar-01?utm_source=github&utm_medium=readme&utm_campaign=token-radar-01)
+
 A make.fun **token-radar-01** entry: a Node 22 TypeScript program (standard
 library only) that reads the sealed DefiLlama snapshot and ranks the
 protocols whose token does not exist yet by what that token could be worth.
